@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/movies"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Edit
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large"></ion-title>
+        </ion-toolbar>
+    </ion-header>
+    
+    <ion-card>
+        <ion-card-header>
+            <ion-avatar>
+                <img alt="Profile picture" src="https://previews.123rf.com/images/maxxyustas/maxxyustas1410/maxxyustas141000053/32939516-video-movie-cinema-concept-retro-camera-reels-clapperboard-and-director-chair-3d.jpg" />
+            </ion-avatar>
+            <ion-card-title>Edit Movie</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <form *ngIf="editForm" class="form" [formGroup]="editForm" (ngSubmit)="submitForm()" novalidate>
+                <ion-list>
+                    <ion-item>
+                        <ion-label position="floating">Title:</ion-label>
+                        <ion-input formControlName="title" type="text"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label position="floating">Year</ion-label>
+                        <ion-input formControlName="year" type="number"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label position="floating">Running Time</ion-label>
+                        <ion-input formControlName="runningTime" type="number"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label position="floating">Genres</ion-label>
+                        <ion-input formControlName="genres" type="text"></ion-input>
+                    </ion-item>
+                </ion-list>
+                
+                <ion-button type="submit" expand="block" [disabled]="!editForm.valid" id="present-alert">Save</ion-button>
+                <ion-alert
+                trigger="present-alert"
+                header="Save"
+                message="Movie edited successfully"
+                [buttons]="alertButtons"
+                ></ion-alert>
+                
+            </form>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

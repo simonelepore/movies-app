@@ -1,0 +1,46 @@
+
+<ion-card>
+  <ion-card-header>
+    <ion-avatar>
+      <img alt="Profile picture" src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg" />
+    </ion-avatar>
+    <ion-card-title>User00</ion-card-title>
+    <ion-card-subtitle>Edit Profile</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+        <ion-item>
+          <ion-input label="Name" placeholder="Mario"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-input label="Last Name" placeholder="Rossi"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-input label="Email Address" type="email" placeholder="mario@rossi.com"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-input label="Password" type="password" value="password"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-input label="Birth Date" type="number" placeholder="19-10-1985"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-input label="Telephone" type="tel" placeholder="333-887-6422"></ion-input>
+        </ion-item>
+    </ion-list>
+    
+    <ion-button id="present-alert">Save</ion-button>
+    <ion-alert
+    trigger="present-alert"
+    header="Save"
+    message="Profile was edited successfully"
+    [buttons]="alertButtons"
+    ></ion-alert>
+    
+  </ion-card-content>
+</ion-card>

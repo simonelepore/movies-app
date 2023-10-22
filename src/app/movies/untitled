@@ -1,0 +1,18 @@
+- creazione di un componente padre che effettua una chiamata verso un service injettato (delegato alla chiamata per far tornare la lista dei film)
+- solo il componente padre avrà le logiche, il figlio delegato solo alla vista, più banale possibile. è lui che intercetterà il click ma comunque lo invierà al padre
+
+- componente figlio (esattamente uguale a quello di profile) che riceve in input la lista dei film e rappresenta la lista (avrà solo input per ricevere i film e output per mandare il click)
+
+- dalla lista si avrà i click sugli elementi.
+    - il click -> passerà il film al padre che provvederà a chiamare la rotta -> tramite una rotta dinamica /detail/:id
+    - implementare lo slider --> abbiamo due icone, edit e delete --> passeranno al padre il film selezionato (console.log)
+
+- componente del dettaglio che recupera l'id dal parametro e chiama il service per ricavare il film dall'array
+    - visualizza le info del film
+
+- bonus: torna indietro dalla tab del dettaglio con la freccia sulla nav
+
+- lista farla shared, fuori dal contesto della tab
+
+
+- creare una form ed evento submit agganciato
