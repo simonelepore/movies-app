@@ -42,10 +42,12 @@ export class EditPage {
         deathYear: new FormControl(this.celebrity?.deathYear)
 
       })
+      
+      // this.editForm.valueChanges.subscribe((form: FormGroup) => console.log(form));
     }
 
     submitForm() {
-      // console.log(this.editForm?.value);
+      console.log(this.editForm?.value);
       if (this.editForm?.valid) {
         this._celebritiesService.update(this.editForm?.value);
         this._location.back();

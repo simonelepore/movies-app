@@ -1,11 +1,14 @@
 import { Injectable } from "@angular/core";
 import { celebrities } from "../interfaces/celebrities.interface";
+import { Subject } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class CelebritiesService {
+
+    // RENDILO PRIVATE, altrimenti qualcuno malintenzionato potrebbe manipolare l'oggetto
     celebrities: celebrities[] = [
         {
             id: "1",
@@ -68,9 +71,16 @@ export class CelebritiesService {
             deathYear: null
         }
     ];
+
+    //ricordati che il subject si scrive col dollaro finale es.: celebritiesSubject$
+    subject = new Subject<celebrities[]>();
     
-    getList(){
-        return this.celebrities; 
+    // getList(){
+    //     return this.celebrities;
+    // }
+
+    getListSubject(){
+        this.subject.next(this.celebrities);
     }
     
     
@@ -102,7 +112,30 @@ export class CelebritiesService {
         if (index !== -1) {
             this.celebrities[index] = celebritySelected;
         }
+        // scommentalo quando implementi il subject
+        this.subject.next(this.celebrities);
         
+    }
+
+    delete(id: string) {
+        const index = this.celebrities.findIndex((celebrity: celebrities) => celebrity.id === id);
+        if (index !== -1) {
+
+            // meglio usare la filter perché può non trovare l'id corrispondente nel momento in cui aggiungo una nuova celebrity
+            // e ne elimino un'altra
+            this.celebrities.splice(index, 1);
+
+            // this.celebrities.filter((element) => element.id !== id);
+
+        }
+        this.subject.next(this.celebrities);
+
+    }
+
+    create(newCelebrity: celebrities) {
+        this.celebrities.push(newCelebrity);
+        this.subject.next(this.celebrities);
+        console.log(this.celebrities);
     }
     
 }

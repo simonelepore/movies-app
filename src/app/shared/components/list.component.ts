@@ -1,6 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { celebrities } from 'src/app/celebrities/interfaces/celebrities.interface';
+import { CelebritiesService } from 'src/app/celebrities/services/celebrities.service';
 import { movies } from 'src/app/movies/interfaces/movies.interface';
 
 @Component({
@@ -19,9 +21,17 @@ export class ListComponent implements OnInit {
 
   @Output() editIdClicked = new EventEmitter<string>();
 
+  @Output() deleteIdClicked = new EventEmitter<string>();
+
+  // @Output() createClicked = new EventEmitter<string>();
+
+  public alertButtons = ['OK'];
+
   constructor(
     private readonly _router: Router,
-    private readonly _route: ActivatedRoute
+    private readonly _route: ActivatedRoute,
+    private readonly _location: Location,
+    private readonly _celebritiesService: CelebritiesService
   ) {}
 
   ngOnInit(): void {}
@@ -35,9 +45,19 @@ export class ListComponent implements OnInit {
     this.editIdClicked.emit(id);
   }
 
+
+  deleteClick(id: string) {
+    this._celebritiesService.delete(id);
+  }
+
+  // createClick() {
+  //   this.createClicked.emit();
+  // }
+
   // showMovieDetail(id: string) {
   //   this._router.navigate(['detail', id]), {relativeTo:this._route};
   //   // this._router.navigate(['tabs', 'movies', 'detail', id]);
   // }
+
 
 }

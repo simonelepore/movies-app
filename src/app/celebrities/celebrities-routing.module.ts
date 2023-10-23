@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CelebritiesPage } from './celebrities.page';
 import { DetailPage } from './detail/detail.page';
 import { EditPage } from './edit/edit.page';
+import { CreatePage } from './create/create.page';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditPage,
+  },
+  {
+    path: 'create',
+    component: CreatePage,
   },
   {
     path: '',

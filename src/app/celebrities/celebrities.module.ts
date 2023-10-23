@@ -10,6 +10,7 @@ import { DetailPage } from './detail/detail.page';
 import { EditPage } from './edit/edit.page';
 import { ListComponent } from '../shared/components/list.component';
 import { ListComponentModule } from '../shared/components/list.module';
+import { CreatePage } from './create/create.page';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { ListComponentModule } from '../shared/components/list.module';
     ReactiveFormsModule,
     ListComponentModule
   ],
-  declarations: [CelebritiesPage, DetailPage, EditPage]
+  declarations: [CelebritiesPage, DetailPage, EditPage, CreatePage]
   // declarations: [CelebritiesPage, ListComponent, DetailPage, EditPage]
 })
 export class CelebritiesPageModule {}

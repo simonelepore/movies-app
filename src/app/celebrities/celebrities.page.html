@@ -3,6 +3,9 @@
     <ion-title>
       Celebrities
     </ion-title>
+    <ion-button (click) ="createCelebrity()" slot="end">
+      <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +15,7 @@
       <ion-title size="large">Celebrities</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-list [celebritiesInput]="ionViewWillEnter()" (selectIdClicked)="showCelebrityDetail($event)" (editIdClicked)="editCelebrity($event)"></app-list>
+  
+  <app-list [celebritiesInput]="celebrities" (selectIdClicked)="showCelebrityDetail($event)" (editIdClicked)="editCelebrity($event)"></app-list>
   
 </ion-content>

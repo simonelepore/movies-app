@@ -2,6 +2,7 @@ import { Component, Output } from '@angular/core';
 import { celebrities } from './interfaces/celebrities.interface';
 import { CelebritiesService } from './services/celebrities.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subject, from } from 'rxjs';
 
 @Component({
   selector: 'app-celebrities',
@@ -11,18 +12,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CelebritiesPage {
 
   @Output() celebritiesList:celebrities[] = [];
+  celebrities: celebrities[] = [];
 
   constructor(
     private readonly _celebrities: CelebritiesService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
-  ) {}
+  ) {
+
+    this._celebrities.subject.subscribe((celebrities: celebrities[]) => {
+      this.celebrities = celebrities;
+    });
+    this._celebrities.getListSubject();
+    console.log(this.celebrities);
+
+  }
 
     // celebritiesList : celebrities[] = this._celebrities.getList();
 
-    ionViewWillEnter() {
-      return this._celebrities.getList();
-    }
+    
   
     getCelebrityId (id: string){
       console.log("celebrityId is: " + id);
@@ -36,5 +44,59 @@ export class CelebritiesPage {
     editCelebrity(id: string) {
       this._router.navigate(['edit', id], {relativeTo:this._route});
     }
+
+    createCelebrity() {
+      this._router.navigate(['create'], {relativeTo:this._route});
+    }
+
+    // tryObservable() {
+
+    // PRIMO ESEMPIO OBSERVABLE
+    // this.result.subscribe(x => console.log(x));
+  
+    // SECONDO ESEMPIO OBSERVABLE
+    // const observable = new Observable((subscriber) => {
+    //   subscriber.next(1);
+    //   subscriber.next(2);
+    //   subscriber.next(3);
+    //   setTimeout(() => {
+    //     subscriber.next(4);
+    //     subscriber.complete();
+    //     subscriber.next(5); //subscriber.next(5) non funzionerà
+    //   }, 1000);
+    // });
+  
+    // console.log('just before subscribe');
+
+    // observable.subscribe({
+    //   next(x){
+    //     console.log("got value " + x);
+    //   },
+    //   error(err) {
+    //     console.error("something wrong occured: " + err);
+    //   },
+    //   complete() {
+    //     console.log("done");
+    //   },
+    // });
+
+    // TERZO ESEMPIO SUBJECT
+    // const subject = new Subject<number>();
+
+    // subject.subscribe({
+    //   next: (v) => console.log(`observerA: ${v}`),
+    // });
+    // subject.subscribe({
+    //   next: (v) => console.log(`observerB: ${v}`),
+    // });
+     
+    // subject.next(1);
+    // subject.next(2);
+      
+    // }
+
+    // PRIMO ESEMPIO OBSERVABLE
+    // array = [10, 20, 30];
+    // result = from(this.array);
 
 }
