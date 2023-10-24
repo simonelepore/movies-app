@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/celebrities"></ion-back-button>
+            <ion-back-button defaultHref="/movies"></ion-back-button>
         </ion-buttons>
         <ion-title>
             Create
@@ -19,26 +19,32 @@
     <ion-card>
         <ion-card-header>
             <ion-avatar>
-                <img alt="Profile picture" src="https://media-assets.vanityfair.it/photos/64b557a6561b6891aa8cf41b/1:1/w_683,h_683,c_limit/GettyImages-1542850132.jpg" />
+                <img alt="Profile picture" src="https://previews.123rf.com/images/maxxyustas/maxxyustas1410/maxxyustas141000053/32939516-video-movie-cinema-concept-retro-camera-reels-clapperboard-and-director-chair-3d.jpg" />
             </ion-avatar>
-            <ion-card-title>Create Celebrity</ion-card-title>
+            <ion-card-title>Create Movies</ion-card-title>
         </ion-card-header>
         <ion-card-content>
             <form *ngIf="createForm" class="form" [formGroup]="createForm" (ngSubmit)="submitForm()" novalidate>
+                
                 <ion-list>
                     <ion-item>
-                        <ion-label position="floating">Name</ion-label>
-                        <ion-input formControlName="name" type="text"></ion-input>
+                        <ion-label position="floating">Title:</ion-label>
+                        <ion-input formControlName="title" type="text"></ion-input>
                     </ion-item>
                     
                     <ion-item>
-                        <ion-label position="floating">Birth Year</ion-label>
-                        <ion-input formControlName="birthYear" type="number"></ion-input>
+                        <ion-label position="floating">Year</ion-label>
+                        <ion-input formControlName="year" type="number"></ion-input>
                     </ion-item>
                     
                     <ion-item>
-                        <ion-label position="floating">Death Year</ion-label>
-                        <ion-input formControlName="deathYear" type="number"></ion-input>
+                        <ion-label position="floating">Running Time</ion-label>
+                        <ion-input formControlName="runningTime" type="number"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label position="floating">Genres</ion-label>
+                        <ion-input formControlName="genres" type="text"></ion-input>
                     </ion-item>
                 </ion-list>
                 
@@ -46,7 +52,7 @@
                 <ion-alert
                 trigger="present-alert"
                 header="Save"
-                message="Celebrity created successfully"
+                message="Movie created successfully"
                 [buttons]="alertButtons"
                 ></ion-alert>
                 

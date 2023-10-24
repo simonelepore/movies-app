@@ -15,15 +15,16 @@ export class CelebritiesPage {
   celebrities: celebrities[] = [];
 
   constructor(
-    private readonly _celebrities: CelebritiesService,
+    private readonly _celebritiesService: CelebritiesService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
   ) {
 
-    this._celebrities.subject.subscribe((celebrities: celebrities[]) => {
+    // una volta creato il list component qui dovrò fare il mapping di ciò che mi arriva in ascolto
+    this._celebritiesService.listObs$.subscribe((celebrities: celebrities[]) => {
       this.celebrities = celebrities;
     });
-    this._celebrities.getListSubject();
+    this._celebritiesService.getListSubject();
     console.log(this.celebrities);
 
   }
@@ -47,6 +48,10 @@ export class CelebritiesPage {
 
     createCelebrity() {
       this._router.navigate(['create'], {relativeTo:this._route});
+    }
+
+    deleteCelebrity(id: string) {
+      this._celebritiesService.delete(id);
     }
 
     // tryObservable() {

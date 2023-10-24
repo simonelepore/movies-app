@@ -3,6 +3,9 @@
     <ion-title>
       Movies
     </ion-title>
+    <ion-button (click) ="createMovie()" slot="end">
+      <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +15,7 @@
       <ion-title size="large">Movies</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-list [moviesInput]="ionViewWillEnter()" (selectIdClicked)="showMovieDetail($event)" (editIdClicked)="editMovie($event)"></app-list>
-
+  
+  <app-list [moviesInput]="movies" (selectIdClicked)="showMovieDetail($event)" (editIdClicked)="editMovie($event)" (deleteIdClicked)="deleteMovie($event)"></app-list>
+  
 </ion-content>

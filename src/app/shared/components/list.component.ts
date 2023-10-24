@@ -45,10 +45,15 @@ export class ListComponent implements OnInit {
     this.editIdClicked.emit(id);
   }
 
-
+  
   deleteClick(id: string) {
-    this._celebritiesService.delete(id);
+    this.deleteIdClicked.emit(id);
   }
+
+
+  // deleteClick(id: string) {
+  //   this._celebritiesService.delete(id);
+  // }
 
   // createClick() {
   //   this.createClicked.emit();

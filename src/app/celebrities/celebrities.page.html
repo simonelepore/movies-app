@@ -16,6 +16,6 @@
     </ion-toolbar>
   </ion-header>
   
-  <app-list [celebritiesInput]="celebrities" (selectIdClicked)="showCelebrityDetail($event)" (editIdClicked)="editCelebrity($event)"></app-list>
+  <app-list [celebritiesInput]="celebrities" (selectIdClicked)="showCelebrityDetail($event)" (editIdClicked)="editCelebrity($event)" (deleteIdClicked)="deleteCelebrity($event)"></app-list>
   
 </ion-content>

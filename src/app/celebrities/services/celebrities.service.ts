@@ -9,7 +9,7 @@ import { Subject } from "rxjs";
 export class CelebritiesService {
 
     // RENDILO PRIVATE, altrimenti qualcuno malintenzionato potrebbe manipolare l'oggetto
-    celebrities: celebrities[] = [
+    _celebrities: celebrities[] = [
         {
             id: "1",
             name: "Leonardo DiCaprio",
@@ -72,20 +72,22 @@ export class CelebritiesService {
         }
     ];
 
-    //ricordati che il subject si scrive col dollaro finale es.: celebritiesSubject$
-    subject = new Subject<celebrities[]>();
+    //ricordati che l'observable si scrive col dollaro finale es.: celebritiesSubject$
+    private _listSubject$ = new Subject<celebrities[]>();
+
+    listObs$ = this._listSubject$.asObservable();
     
     // getList(){
     //     return this.celebrities;
     // }
 
     getListSubject(){
-        this.subject.next(this.celebrities);
+        this._next();
     }
     
     
     getById(id: string): celebrities | undefined {
-        return this.celebrities.find((celebrities: celebrities) => celebrities.id === id);
+        return this._celebrities.find((celebrities: celebrities) => celebrities.id === id);
         
         // se voglio usare questo metodo posso togliere l'undefined
         
@@ -106,36 +108,48 @@ export class CelebritiesService {
         //     }
         // }
     }
+
+    private _getIndex (id: string): number {
+        return this._celebrities.findIndex((celebrity: celebrities) => celebrity.id === id);
+    }
+
+    private _next () {
+        this._listSubject$.next(this._celebrities);
+    }
     
     update(celebritySelected: celebrities) {
-        const index = this.celebrities.findIndex((celebrity: celebrities) => celebrity.id === celebritySelected.id);
+        // debugger;
+        const index : number = this._getIndex(celebritySelected.id);
+        // uguale a:
+        // const index = this._celebrities.findIndex((celebrity: celebrities) => celebrity.id === celebritySelected.id);
         if (index !== -1) {
-            this.celebrities[index] = celebritySelected;
+            this._celebrities[index] = celebritySelected;
         }
-        // scommentalo quando implementi il subject
-        this.subject.next(this.celebrities);
+        this._next();
         
     }
 
     delete(id: string) {
-        const index = this.celebrities.findIndex((celebrity: celebrities) => celebrity.id === id);
+        const index : number = this._getIndex(id);
+        // const index = this._celebrities.findIndex((celebrity: celebrities) => celebrity.id === id);
         if (index !== -1) {
-
-            // meglio usare la filter perché può non trovare l'id corrispondente nel momento in cui aggiungo una nuova celebrity
-            // e ne elimino un'altra
-            this.celebrities.splice(index, 1);
-
+            this._celebrities.splice(index, 1);
             // this.celebrities.filter((element) => element.id !== id);
-
         }
-        this.subject.next(this.celebrities);
+        this._next();
 
     }
 
+    
+    getArrayLength():string {
+        return (this._celebrities.length + 1).toString();
+    }
+
     create(newCelebrity: celebrities) {
-        this.celebrities.push(newCelebrity);
-        this.subject.next(this.celebrities);
-        console.log(this.celebrities);
+        // debugger
+        this._celebrities.push(newCelebrity);
+        this._next();
+        console.log(this._celebrities);
     }
     
 }

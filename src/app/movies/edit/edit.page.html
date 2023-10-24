@@ -25,6 +25,7 @@
         </ion-card-header>
         <ion-card-content>
             <form *ngIf="editForm" class="form" [formGroup]="editForm" (ngSubmit)="submitForm()" novalidate>
+                
                 <ion-list>
                     <ion-item>
                         <ion-label position="floating">Title:</ion-label>
