@@ -18,15 +18,16 @@ export class MoviesPage {
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
     ) {
-      
-      this._moviesService.listObs$.subscribe((movies: movies[]) => {
-        this.movies = movies;
-      });
-      this._moviesService.getListSubject();
+      // this._moviesService.getListSubject().subscribe((result: movies[]) => {this.movies = result;});
+      }
 
-    }
 
   // moviesList : movies[] = this._movies.getList();
+
+  ionViewWillEnter() {
+    // this._moviesService.getList();
+    this._moviesService.getObservable().subscribe((result: movies[]) => {this.movies = result;});
+  }
 
   getMovieId (id: string){
     console.log("movieId is: " + id);
@@ -46,7 +47,7 @@ export class MoviesPage {
   }
 
   deleteMovie(id: string) {
-    this._moviesService.delete(id);
+    this._moviesService.delete(id).subscribe(() => this._moviesService.getObservable().subscribe((result: movies[]) => {this.movies = result;}));
   }
 
 }

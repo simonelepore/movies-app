@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { movies } from "../interfaces/movies.interface";
-import { Subject } from "rxjs";
+import { MovieForm, movies } from "../interfaces/movies.interface";
+import { Observable, Subject, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 
@@ -139,33 +139,72 @@ export class MoviesService {
     //     return this._movies; 
     // }
     
-    getListSubject(){
-        // this._http.get<movies[]>(`${ this._baseUrl }/`);
-        this._next();
+    getObservable(): Observable <movies[]> {
+        // l'any, tipo di result, deve diventare poi un'interfaccia!
+        return this._http.get<movies[]>(`${ this._baseUrl }/movies?order_by=id&page=0&size=25`).pipe(map((result: any) => {
+            return result.movies;
+        }));
+    }
+
+    // mi sa che va fatto nel movies.page.ts
+    getList() {
+        this.getObservable().subscribe((result: movies[]) => {this._movies = result;});
     }
     
     
-    getById(id: string): movies | undefined {
-        return this._movies.find((movies: movies) => movies.id === id);
+    getById(id: string): Observable <movies> {
+        return this._http.get<movies>(`${ this._baseUrl }/movies/${id}`);
+    }
 
-        // se voglio usare questo metodo posso togliere l'undefined
+    formToDto(newMovie: MovieForm): movies {
+        return {
+            id: newMovie.id,
+            title: newMovie.title,
+            year: newMovie.year,
+            runningTime: newMovie.runningTime,
+            genres: newMovie.genres,
+            rating: {
+                averageRating: newMovie.averageRating,
+                numVotes: newMovie.numVotes
+            }
+        };
+    }
 
-        // const movie: movies | undefined = this.movies.find(movies => movies.id === id);
-        // if (movie) {
-        //     return movie;
-        // } else {
-        //     return {
-        //         id: "0",
-        //         title: "",
-        //         year: 0,
-        //         runningTime: 0,
-        //         genres: "",
-        //         rating: {
-        //             averageRating: 0,
-        //             numVotes: 0,
-        //         }
-        //     }
+    dtoToForm() {
+        // fare la cosa di sopra però al contrario per l'edit
+    }
+
+    create(newMovie: MovieForm) {
+        const movieDto : movies = this.formToDto(newMovie);
+        return this._http.post<movies>(`${ this._baseUrl }/movies`, movieDto);
+
+        // this._movies.push(newMovie);
+        // this._next();
+        // console.log(this._movies);
+    }
+    
+    update(movieSelected: movies): Observable <movies> {
+        return this._http.put<movies>(`${ this._baseUrl }/movies/${movieSelected.id}`, movieSelected);
+        
+        // const index : number = this._getIndex(movieSelected.id);
+        // if (index !== -1) {
+        //     this._movies[index] = movieSelected;
         // }
+        // this._next();
+    }
+
+    delete(id: string): Observable <movies> {
+        return this._http.delete<movies>(`${ this._baseUrl }/movies/${id}`);
+
+        // const index : number = this._getIndex(id);
+        // if (index !== -1) {
+        //     this._movies.splice(index, 1);
+        // }
+        // this._next();
+    }
+
+    getArrayLength():number {
+        return this._movies.length;
     }
 
     private _getIndex (id: string): number {
@@ -174,33 +213,6 @@ export class MoviesService {
 
     private _next () {
         this._listSubject$.next(this._movies);
-    }
-
-    update(movieSelected: movies) {
-        const index : number = this._getIndex(movieSelected.id);
-        if (index !== -1) {
-            this._movies[index] = movieSelected;
-        }
-        this._next();
-
-    }
-
-    delete(id: string) {
-        const index : number = this._getIndex(id);
-        if (index !== -1) {
-            this._movies.splice(index, 1);
-        }
-        this._next();
-    }
-
-    getArrayLength():number {
-        return this._movies.length;
-    }
-
-    create(newMovie: movies) {
-        this._movies.push(newMovie);
-        this._next();
-        // console.log(this._movies);
     }
     
 }

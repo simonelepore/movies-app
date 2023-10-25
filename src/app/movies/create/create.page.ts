@@ -27,11 +27,17 @@ export class CreatePage {
 
     private _setForm() {
       this.createForm = new FormGroup({
-        id: new FormControl((this._moviesService.getArrayLength() + 1).toString()),
+        // id: new FormControl((this._moviesService.getArrayLength() + 1).toString()),
+        id: new FormControl("", Validators.required),
         title: new FormControl("", Validators.required),
         year: new FormControl("", Validators.required),
         runningTime: new FormControl("", Validators.required),
-        genres: new FormControl("", Validators.required)
+        genres: new FormControl("", Validators.required),
+        averageRating: new FormControl(0, Validators.required),
+        numVotes: new FormControl(0, Validators.required)
+        // rating: new FormGroup({
+          
+        // })
       })
       
       this.createForm.valueChanges.subscribe((form: FormGroup) => console.log(form));
@@ -39,8 +45,8 @@ export class CreatePage {
 
     submitForm() {
       console.log(this.createForm?.value);
-        this._moviesService.create(this.createForm?.value);
-        this._location.back();
+        this._moviesService.create(this.createForm?.value).subscribe(() => {this._location.back();
+        });
         // this._router.navigate(['/tabs/movies']);
     }
 

@@ -21,7 +21,7 @@ import { CreatePage } from './create/create.page';
     MoviesPageRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ListComponentModule
+    ListComponentModule,
   ],
   declarations: [MoviesPage, DetailPage, EditPage, CreatePage]
   // declarations: [MoviesPage, ListComponent, DetailPage, EditPage]

@@ -27,8 +27,11 @@ export class EditPage {
         this.selectedMovieId = params['id'];
         if (this.selectedMovieId) {
           
-          this.movie = this._moviesService.getById(this.selectedMovieId);
-          this._setForm();
+          this._moviesService.getById(this.selectedMovieId).subscribe((result: movies) => {
+            this.movie = result;
+            this._setForm();
+          });
+          // this.movie = this._moviesService.getById(this.selectedMovieId);
         }
       });
     }
@@ -45,10 +48,12 @@ export class EditPage {
     }
 
     submitForm() {
+      // debugger
       // console.log(this.editForm?.value);
       if (this.editForm?.valid) {
-        this._moviesService.update(this.editForm?.value);
-        this._location.back();
+        this._moviesService.update(this.editForm?.value).subscribe(() => {
+          this._location.back();
+        });
         // this._router.navigate(['/tabs/movies']);
         
       }

@@ -20,7 +20,7 @@ export class DetailPage {
       this._route.params.subscribe(params =>{
         this.selectedMovieId = params['id'];
         if (this.selectedMovieId) {
-          this.movie = this._moviesService.getById(this.selectedMovieId)
+          this._moviesService.getById(this.selectedMovieId).subscribe((result: movies) => this.movie = result);
         }
       });
     }

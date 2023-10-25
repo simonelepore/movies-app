@@ -30,3 +30,29 @@
 -interfaccia Movies con lettera maiuscola
 -rendere privato ciò che è da rendere privato con l'underscore FATTO
 -risolvi warning ionlabel
+-cambiare l'any del result del getlistsubject nel movieservice
+
+-VEDERE CAST NEL DETTAGLIO DEL MOVIE COL CLICK CHE TI RIMANDA AL DETTAGLIO DELLA' CELEBRITA'
+-per fare ciò crearsi una card comune come componente con id e name, simile alla lista
+
+
+        // return this._movies.find((movies: movies) => movies.id === id);
+
+        // se voglio usare questo metodo posso togliere l'undefined
+
+        // const movie: movies | undefined = this.movies.find(movies => movies.id === id);
+        // if (movie) {
+        //     return movie;
+        // } else {
+        //     return {
+        //         id: "0",
+        //         title: "",
+        //         year: 0,
+        //         runningTime: 0,
+        //         genres: "",
+        //         rating: {
+        //             averageRating: 0,
+        //             numVotes: 0,
+        //         }
+        //     }
+        // }
