@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MoviesService } from '../services/movies.service';
-import { movies } from '../interfaces/movies.interface';
+import { Movie } from '../interfaces/movies.interface';
 
 @Component({
   selector: 'app-create',
@@ -14,7 +14,7 @@ import { movies } from '../interfaces/movies.interface';
 
 export class CreatePage {
 
-  movie: movies | undefined;
+  movie: Movie | undefined;
   createForm: FormGroup | undefined;
   public alertButtons = ['OK'];
 
@@ -36,7 +36,8 @@ export class CreatePage {
         averageRating: new FormControl(0, Validators.required),
         numVotes: new FormControl(0, Validators.required)
         // rating: new FormGroup({
-          
+        //   averageRating: new FormControl(0, Validators.required),
+        //   numVotes: new FormControl(0, Validators.required),
         // })
       })
       
@@ -45,9 +46,11 @@ export class CreatePage {
 
     submitForm() {
       console.log(this.createForm?.value);
+      if (this.createForm?.valid) {
         this._moviesService.create(this.createForm?.value).subscribe(() => {this._location.back();
         });
         // this._router.navigate(['/tabs/movies']);
+      }  
     }
 
 }

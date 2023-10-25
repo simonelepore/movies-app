@@ -27,6 +27,11 @@
             <form *ngIf="createForm" class="form" [formGroup]="createForm" (ngSubmit)="submitForm()" novalidate>
                 <ion-list>
                     <ion-item>
+                        <ion-label position="floating">Id</ion-label>
+                        <ion-input formControlName="id" type="text"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
                         <ion-label position="floating">Name</ion-label>
                         <ion-input formControlName="name" type="text"></ion-input>
                     </ion-item>

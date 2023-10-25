@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { MovieForm, movies } from "../interfaces/movies.interface";
+import { Movie, MovieForm } from "../interfaces/movies.interface";
 import { Observable, Subject, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -10,7 +10,7 @@ import { environment } from "src/environments/environment";
 
 export class MoviesService {
     private _baseUrl = '';
-    private _movies: movies[] = [];
+    private _movies: Movie[] = [];
 
     constructor(
         private readonly _http: HttpClient
@@ -18,7 +18,86 @@ export class MoviesService {
         this._baseUrl = environment.baseUrl;
     }
 
-    // private _movies: movies[] = [
+    private _listSubject$ = new Subject<Movie[]>();
+
+    listObs$ = this._listSubject$.asObservable();
+    
+    // getList(){
+    //     return this._movies; 
+    // }
+    
+    getObservable(): Observable <Movie[]> {
+        // l'any, tipo di result, deve diventare poi un'interfaccia (gestendo anche la pagination praticamente)!
+        return this._http.get<Movie[]>(`${ this._baseUrl }/movies?order_by=id&page=0&size=25`).pipe(map((result: any) => {
+            return result.movies;
+        }));
+    }
+    
+    
+    getById(id: string): Observable <Movie> {
+        return this._http.get<Movie>(`${ this._baseUrl }/movies/${id}`);
+    }
+
+    formToDto(newMovie: MovieForm): Movie {
+        return {
+            id: newMovie.id,
+            title: newMovie.title,
+            year: newMovie.year,
+            runningTime: newMovie.runningTime,
+            genres: newMovie.genres,
+            rating: {
+                averageRating: newMovie.averageRating,
+                numVotes: newMovie.numVotes
+            }
+        };
+    }
+
+    dtoToForm() {
+        // fare la cosa di sopra però al contrario per l'edit
+    }
+
+    create(newMovie: MovieForm) {
+        const movieDto : Movie = this.formToDto(newMovie);
+        return this._http.post<Movie>(`${ this._baseUrl }/movies`, movieDto);
+
+        // this._movies.push(newMovie);
+        // this._next();
+        // console.log(this._movies);
+    }
+    
+    update(movieSelected: Movie): Observable <Movie> {
+        return this._http.put<Movie>(`${ this._baseUrl }/movies/${movieSelected.id}`, movieSelected);
+        
+        // const index : number = this._getIndex(movieSelected.id);
+        // if (index !== -1) {
+        //     this._movies[index] = movieSelected;
+        // }
+        // this._next();
+    }
+
+    delete(id: string): Observable <Movie> {
+        return this._http.delete<Movie>(`${ this._baseUrl }/movies/${id}`);
+
+        // const index : number = this._getIndex(id);
+        // if (index !== -1) {
+        //     this._movies.splice(index, 1);
+        // }
+        // this._next();
+    }
+
+    getArrayLength():number {
+        return this._movies.length;
+    }
+
+    private _getIndex (id: string): number {
+        return this._movies.findIndex((movie: Movie) => movie.id === id);
+    }
+
+    private _next () {
+        this._listSubject$.next(this._movies);
+    }
+
+        // private _movies: movies[] = [
     //     {
     //         id: "1",
     //         title: "Il Signore degli Anelli: La Compagnia dell'Anello",
@@ -130,89 +209,5 @@ export class MoviesService {
     //         }
     //     }
     // ];
-
-    private _listSubject$ = new Subject<movies[]>();
-
-    listObs$ = this._listSubject$.asObservable();
-    
-    // getList(){
-    //     return this._movies; 
-    // }
-    
-    getObservable(): Observable <movies[]> {
-        // l'any, tipo di result, deve diventare poi un'interfaccia!
-        return this._http.get<movies[]>(`${ this._baseUrl }/movies?order_by=id&page=0&size=25`).pipe(map((result: any) => {
-            return result.movies;
-        }));
-    }
-
-    // mi sa che va fatto nel movies.page.ts
-    getList() {
-        this.getObservable().subscribe((result: movies[]) => {this._movies = result;});
-    }
-    
-    
-    getById(id: string): Observable <movies> {
-        return this._http.get<movies>(`${ this._baseUrl }/movies/${id}`);
-    }
-
-    formToDto(newMovie: MovieForm): movies {
-        return {
-            id: newMovie.id,
-            title: newMovie.title,
-            year: newMovie.year,
-            runningTime: newMovie.runningTime,
-            genres: newMovie.genres,
-            rating: {
-                averageRating: newMovie.averageRating,
-                numVotes: newMovie.numVotes
-            }
-        };
-    }
-
-    dtoToForm() {
-        // fare la cosa di sopra però al contrario per l'edit
-    }
-
-    create(newMovie: MovieForm) {
-        const movieDto : movies = this.formToDto(newMovie);
-        return this._http.post<movies>(`${ this._baseUrl }/movies`, movieDto);
-
-        // this._movies.push(newMovie);
-        // this._next();
-        // console.log(this._movies);
-    }
-    
-    update(movieSelected: movies): Observable <movies> {
-        return this._http.put<movies>(`${ this._baseUrl }/movies/${movieSelected.id}`, movieSelected);
-        
-        // const index : number = this._getIndex(movieSelected.id);
-        // if (index !== -1) {
-        //     this._movies[index] = movieSelected;
-        // }
-        // this._next();
-    }
-
-    delete(id: string): Observable <movies> {
-        return this._http.delete<movies>(`${ this._baseUrl }/movies/${id}`);
-
-        // const index : number = this._getIndex(id);
-        // if (index !== -1) {
-        //     this._movies.splice(index, 1);
-        // }
-        // this._next();
-    }
-
-    getArrayLength():number {
-        return this._movies.length;
-    }
-
-    private _getIndex (id: string): number {
-        return this._movies.findIndex((movie: movies) => movie.id === id);
-    }
-
-    private _next () {
-        this._listSubject$.next(this._movies);
-    }
     
 }

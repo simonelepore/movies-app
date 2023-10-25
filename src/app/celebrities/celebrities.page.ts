@@ -1,8 +1,9 @@
 import { Component, Output } from '@angular/core';
-import { celebrities } from './interfaces/celebrities.interface';
+import { Celebrity } from './interfaces/celebrities.interface';
 import { CelebritiesService } from './services/celebrities.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, from } from 'rxjs';
+import { Item } from '../shared/interfaces/itemlist.interface';
 
 @Component({
   selector: 'app-celebrities',
@@ -11,27 +12,35 @@ import { Observable, Subject, from } from 'rxjs';
 })
 export class CelebritiesPage {
 
-  @Output() celebritiesList:celebrities[] = [];
-  celebrities: celebrities[] = [];
+  // @Output() celebritiesList:Celebrity[] = [];
+  celebrities: Item[] = [];
 
   constructor(
     private readonly _celebritiesService: CelebritiesService,
     private readonly _router: Router,
     private readonly _route: ActivatedRoute
   ) {
-
-    // una volta creato il list component qui dovrò fare il mapping di ciò che mi arriva in ascolto
-    this._celebritiesService.listObs$.subscribe((celebrities: celebrities[]) => {
-      this.celebrities = celebrities;
-    });
-    this._celebritiesService.getListSubject();
-    console.log(this.celebrities);
-
-  }
+    // this._celebritiesService.listObs$.subscribe((celebrities: celebrities[]) => {
+    //   this.celebrities = celebrities;
+    // });
+    }
 
     // celebritiesList : celebrities[] = this._celebrities.getList();
 
-    
+    private _getList() {
+      // una volta creato il list component qui dovrò fare il mapping di ciò che mi arriva in ascolto
+      this._celebritiesService.getObservable().subscribe((result: Celebrity[]) => {this.celebrities = result.map((celebrity: Celebrity) =>{
+        return {
+          id: celebrity.id,
+          name: celebrity.name
+        }
+      });
+      });
+    }
+
+    ionViewWillEnter() {
+      this._getList();
+    }
   
     getCelebrityId (id: string){
       console.log("celebrityId is: " + id);
@@ -51,7 +60,7 @@ export class CelebritiesPage {
     }
 
     deleteCelebrity(id: string) {
-      this._celebritiesService.delete(id);
+      this._celebritiesService.delete(id).subscribe(() => this._getList());
     }
 
     // tryObservable() {

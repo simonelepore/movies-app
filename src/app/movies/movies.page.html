@@ -16,6 +16,6 @@
     </ion-toolbar>
   </ion-header>
   
-  <app-list [moviesInput]="movies" (selectIdClicked)="showMovieDetail($event)" (editIdClicked)="editMovie($event)" (deleteIdClicked)="deleteMovie($event)"></app-list>
+  <app-list [items]="movies" (selectIdClicked)="showMovieDetail($event)" (editIdClicked)="editMovie($event)" (deleteIdClicked)="deleteMovie($event)"></app-list>
   
 </ion-content>

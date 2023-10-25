@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { celebrities } from 'src/app/celebrities/interfaces/celebrities.interface';
+import { Celebrity } from 'src/app/celebrities/interfaces/celebrities.interface';
 import { CelebritiesService } from 'src/app/celebrities/services/celebrities.service';
-import { movies } from 'src/app/movies/interfaces/movies.interface';
+import { Movie } from 'src/app/movies/interfaces/movies.interface';
+import { Item } from '../interfaces/itemlist.interface';
 
 @Component({
   selector: 'app-list',
@@ -13,9 +14,11 @@ import { movies } from 'src/app/movies/interfaces/movies.interface';
 
 export class ListComponent implements OnInit {
 
-  @Input() moviesInput:movies[]= [];
+  @Input() items:Item[] = [];
 
-  @Input() celebritiesInput:celebrities[]= [];
+  // @Input() moviesInput:Movie[]= [];
+
+  @Input() celebritiesInput:Celebrity[]= [];
 
   @Output() selectIdClicked = new EventEmitter<string>();
 

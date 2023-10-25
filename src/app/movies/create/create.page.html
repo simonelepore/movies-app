@@ -51,6 +51,16 @@
                         <ion-label position="floating">Genres</ion-label>
                         <ion-input formControlName="genres" type="text"></ion-input>
                     </ion-item>
+
+                    <ion-item>
+                        <ion-label position="floating">Average Rating</ion-label>
+                        <ion-input formControlName="averageRating" type="number"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label position="floating">Total number of votes</ion-label>
+                        <ion-input formControlName="numVotes" type="number"></ion-input>
+                    </ion-item>
                 </ion-list>
                 
                 <ion-button type="submit" expand="block" [disabled]="!createForm.valid" id="present-alert">Save</ion-button>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { movies } from '../interfaces/movies.interface';
+import { Movie } from '../interfaces/movies.interface';
 import { MoviesService } from '../services/movies.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { MoviesService } from '../services/movies.service';
 export class DetailPage {
 
   selectedMovieId: string | undefined;
-  movie: movies | undefined;
+  movie: Movie | undefined;
 
   constructor(
     private _route: ActivatedRoute,
@@ -20,7 +20,7 @@ export class DetailPage {
       this._route.params.subscribe(params =>{
         this.selectedMovieId = params['id'];
         if (this.selectedMovieId) {
-          this._moviesService.getById(this.selectedMovieId).subscribe((result: movies) => this.movie = result);
+          this._moviesService.getById(this.selectedMovieId).subscribe((result: Movie) => this.movie = result);
         }
       });
     }

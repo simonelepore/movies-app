@@ -14,45 +14,29 @@
 
 - lista farla shared, fuori dal contesto della tab
 
-
 - creare una form ed evento submit agganciato
 
--fai delete e aggiunta
+- fai delete e aggiunta
 
 
 
 
 -header come componente
--crea list item condivisa
--id istanziato fuori FATTO (errore)
 -titolo passato come input dal padre nell'header
--fai anche per movies FATTO
--interfaccia Movies con lettera maiuscola
+
+-crea list item condivisa FATTO FINALMENTE
+creo componente condiviso e importo, faccio il mapping di tutte le funzioni, passo in input list e non più movies/celebrities
+
+-id istanziato fuori FATTO (errore)
+-interfaccia Movies con lettera maiuscola FATTO
 -rendere privato ciò che è da rendere privato con l'underscore FATTO
 -risolvi warning ionlabel
--cambiare l'any del result del getlistsubject nel movieservice
+-cambiare l'any del result del getlistsubject nel movieservice (l'oggettone, oltre a movie/celebrity, ti ridà anche la paginazione. quindi va messa quella nell'interface. vedi con un console.log cosa ti restituisce e falla di seguito)
 
 -VEDERE CAST NEL DETTAGLIO DEL MOVIE COL CLICK CHE TI RIMANDA AL DETTAGLIO DELLA' CELEBRITA'
 -per fare ciò crearsi una card comune come componente con id e name, simile alla lista
+-routerlink all'interno dell'html, scatenando  la rotta dal'html
+https://angular.io/api/router/RouterLink
+la difficoltà sta nel fatto che c'è chi andrà su movie e chi su celebrity
 
-
-        // return this._movies.find((movies: movies) => movies.id === id);
-
-        // se voglio usare questo metodo posso togliere l'undefined
-
-        // const movie: movies | undefined = this.movies.find(movies => movies.id === id);
-        // if (movie) {
-        //     return movie;
-        // } else {
-        //     return {
-        //         id: "0",
-        //         title: "",
-        //         year: 0,
-        //         runningTime: 0,
-        //         genres: "",
-        //         rating: {
-        //             averageRating: 0,
-        //             numVotes: 0,
-        //         }
-        //     }
-        // }
+PER ESERCIZIO: 2 tab 2 services 2 entità

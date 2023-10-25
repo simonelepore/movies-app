@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { celebrities } from '../interfaces/celebrities.interface';
+import { Celebrity } from '../interfaces/celebrities.interface';
 import { CelebritiesService } from '../services/celebrities.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { CelebritiesService } from '../services/celebrities.service';
 
 export class CreatePage {
 
-  celebrity: celebrities | undefined;
+  celebrity: Celebrity | undefined;
   createForm: FormGroup | undefined;
   public alertButtons = ['OK'];
 
@@ -29,7 +29,7 @@ export class CreatePage {
       // debugger
       this.createForm = new FormGroup({
         // id: new FormControl(this._celebritiesService.getArrayLength()),
-        id: new FormControl((this._celebritiesService._celebrities.length + 1).toString()),
+        id: new FormControl("", Validators.required),
         name: new FormControl("", Validators.required),
         birthYear: new FormControl("", Validators.required),
         deathYear: new FormControl("")
@@ -41,9 +41,11 @@ export class CreatePage {
 
     submitForm() {
       console.log(this.createForm?.value);
-        this._celebritiesService.create(this.createForm?.value);
-        this._location.back();
+      if (this.createForm?.valid) {
+        this._celebritiesService.create(this.createForm?.value).subscribe(() => {this._location.back();
+        });  
         // this._router.navigate(['/tabs/celebrities']);
+      }  
     }
 
 }

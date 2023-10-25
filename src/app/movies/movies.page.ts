@@ -1,7 +1,8 @@
 import { Component, Output } from '@angular/core';
 import { MoviesService } from './services/movies.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { movies } from './interfaces/movies.interface';
+import { Movie } from './interfaces/movies.interface';
+import { Item } from '../shared/interfaces/itemlist.interface';
 
 @Component({
   selector: 'app-movies',
@@ -10,8 +11,8 @@ import { movies } from './interfaces/movies.interface';
 })
 export class MoviesPage {
 
-  @Output() movieList:movies[] = [];
-  movies: movies[] = [];
+  // @Output() movieList:Movie[] = [];
+  movies: Item[] = [];
   
   constructor(
     private readonly _moviesService: MoviesService,
@@ -24,9 +25,20 @@ export class MoviesPage {
 
   // moviesList : movies[] = this._movies.getList();
 
+  private _getList() {
+    this._moviesService.getObservable().subscribe((result: Movie[]) => {
+      this.movies = result.map((movie: Movie) => {
+        return {
+          id: movie.id,
+          name: movie.title
+        }
+      });
+    });
+  }
+
   ionViewWillEnter() {
-    // this._moviesService.getList();
-    this._moviesService.getObservable().subscribe((result: movies[]) => {this.movies = result;});
+    this._getList();
+    // this._moviesService.getObservable().subscribe((result: movies[]) => {this.movies = result;});
   }
 
   getMovieId (id: string){
@@ -47,7 +59,7 @@ export class MoviesPage {
   }
 
   deleteMovie(id: string) {
-    this._moviesService.delete(id).subscribe(() => this._moviesService.getObservable().subscribe((result: movies[]) => {this.movies = result;}));
+    this._moviesService.delete(id).subscribe(() => this._getList());
   }
 
 }

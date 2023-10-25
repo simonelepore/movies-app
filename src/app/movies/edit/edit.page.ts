@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { movies } from '../interfaces/movies.interface';
+import { Movie } from '../interfaces/movies.interface';
 import { MoviesService } from '../services/movies.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 export class EditPage {
 
   selectedMovieId: string | undefined;
-  movie: movies | undefined;
+  movie: Movie | undefined;
   editForm: FormGroup | undefined;
   id: string = "";
   public alertButtons = ['OK'];
@@ -27,7 +27,7 @@ export class EditPage {
         this.selectedMovieId = params['id'];
         if (this.selectedMovieId) {
           
-          this._moviesService.getById(this.selectedMovieId).subscribe((result: movies) => {
+          this._moviesService.getById(this.selectedMovieId).subscribe((result: Movie) => {
             this.movie = result;
             this._setForm();
           });

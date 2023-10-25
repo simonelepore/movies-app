@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { celebrities } from '../interfaces/celebrities.interface';
+import { Celebrity } from '../interfaces/celebrities.interface';
 import { CelebritiesService} from '../services/celebrities.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { CelebritiesService} from '../services/celebrities.service';
 export class DetailPage {
 
   selectedCelebrityId: string | undefined;
-  celebrity: celebrities | undefined;
+  celebrity: Celebrity | undefined;
 
   constructor(
     private _route: ActivatedRoute,
@@ -20,7 +20,7 @@ export class DetailPage {
       this._route.params.subscribe(params =>{
         this.selectedCelebrityId = params['id'];
         if (this.selectedCelebrityId) {
-          this.celebrity = this._celebritiesService.getById(this.selectedCelebrityId)
+          this._celebritiesService.getById(this.selectedCelebrityId).subscribe((result: Celebrity) => this.celebrity = result);
         }
       });
     }

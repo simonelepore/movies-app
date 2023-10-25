@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { celebrities } from '../interfaces/celebrities.interface';
+import { Celebrity } from '../interfaces/celebrities.interface';
 import { CelebritiesService } from '../services/celebrities.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { CelebritiesService } from '../services/celebrities.service';
 export class EditPage {
 
   selectedCelebrityId: string | undefined;
-  celebrity: celebrities | undefined;
+  celebrity: Celebrity | undefined;
   editForm: FormGroup | undefined;
   id: string = "";
   public alertButtons = ['OK'];
@@ -28,8 +28,10 @@ export class EditPage {
         this.selectedCelebrityId = params['id'];
         if (this.selectedCelebrityId) {
           
-          this.celebrity = this._celebritiesService.getById(this.selectedCelebrityId);
-          this._setForm();
+          this._celebritiesService.getById(this.selectedCelebrityId).subscribe((result: Celebrity) => {
+            this.celebrity = result;
+            this._setForm();
+          });
         }
       });
     }
@@ -49,8 +51,9 @@ export class EditPage {
     submitForm() {
       console.log(this.editForm?.value);
       if (this.editForm?.valid) {
-        this._celebritiesService.update(this.editForm?.value);
-        this._location.back();
+        this._celebritiesService.update(this.editForm?.value).subscribe(() => {
+          this._location.back();
+        });
         // this._router.navigate(['/tabs/celebrities']);
         
       }
