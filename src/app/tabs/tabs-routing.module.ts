@@ -17,6 +17,7 @@ const routes: Routes = [
       },
       {
         path: 'profile',
+        canActivate: [],
         loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       },
       {

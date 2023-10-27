@@ -20,9 +20,9 @@ export class CelebritiesService {
     }
 
     //ricordati che l'observable si scrive col dollaro finale es.: celebritiesSubject$
-    private _listSubject$ = new Subject<Celebrity[]>();
+    // private _listSubject$ = new Subject<Celebrity[]>();
 
-    listObs$ = this._listSubject$.asObservable();
+    // listObs$ = this._listSubject$.asObservable();
 
         // getList(){
     //     return this.celebrities;
@@ -64,9 +64,9 @@ export class CelebritiesService {
         return this._celebrities.findIndex((celebrity: Celebrity) => celebrity.id === id);
     }
 
-    private _next () {
-        this._listSubject$.next(this._celebrities);
-    }
+    // private _next () {
+    //     this._listSubject$.next(this._celebrities);
+    // }
 
     // create(newCelebrity: celebrities) {
     //     // debugger

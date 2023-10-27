@@ -18,9 +18,9 @@ export class MoviesService {
         this._baseUrl = environment.baseUrl;
     }
 
-    private _listSubject$ = new Subject<Movie[]>();
+    // private _listSubject$ = new Subject<Movie[]>();
 
-    listObs$ = this._listSubject$.asObservable();
+    // listObs$ = this._listSubject$.asObservable();
     
     // getList(){
     //     return this._movies; 
@@ -93,9 +93,9 @@ export class MoviesService {
         return this._movies.findIndex((movie: Movie) => movie.id === id);
     }
 
-    private _next () {
-        this._listSubject$.next(this._movies);
-    }
+    // private _next () {
+    //     this._listSubject$.next(this._movies);
+    // }
 
         // private _movies: movies[] = [
     //     {
