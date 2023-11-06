@@ -11,6 +11,8 @@ import { DetailPage } from './detail/detail.page';
 import { EditPage } from './edit/edit.page';
 import { ListComponentModule } from '../shared/components/list.module';
 import { CreatePage } from './create/create.page';
+import { BarCustomComponent } from '../shared/components/bar-custom/bar-custom.component';
+import { BarCustomModule } from '../shared/components/bar-custom/bar-custom.module';
 
 @NgModule({
   imports: [
@@ -22,6 +24,7 @@ import { CreatePage } from './create/create.page';
     FormsModule,
     ReactiveFormsModule,
     ListComponentModule,
+    BarCustomModule
   ],
   declarations: [MoviesPage, DetailPage, EditPage, CreatePage]
   // declarations: [MoviesPage, ListComponent, DetailPage, EditPage]

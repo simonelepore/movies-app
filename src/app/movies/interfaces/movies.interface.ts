@@ -1,3 +1,8 @@
+export interface ResponseDto {
+    movies: Movie[];
+    pagination: Pagination;
+}
+
 export interface Movie {
     id: string;
     title: string;
@@ -7,6 +12,13 @@ export interface Movie {
     cast?: Cast[];
     rating: Rating;
     country?: Country[];
+}
+
+export interface Pagination {
+    currentPage: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
 }
 
 export interface MovieForm {

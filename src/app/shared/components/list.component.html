@@ -1,46 +1,28 @@
-<!-- <div id="container">
-  <ion-list>
-    <ion-item *ngFor="let movie of pippo;">
-      <ion-label>{{movie.name}} ({{movie.year}})</ion-label>
-    </ion-item>
-  </ion-list>
-</div> -->
-
 <ion-list>
-  <ion-item-sliding *ngFor="let item of items">
+  <ion-item-sliding *ngFor="let item of items | orderByRating">
     <ion-item (click)="selectClick(item.id)">
-      <ion-label>{{item.name}}</ion-label>
+      <ion-label [minRating]="5" [checkRating]="item.rating! | toInt : 1">
+      <!-- <ion-label class="color" [ngClass]="{'questo-film-fa-cagare': (item.rating! | toInt : 1) <= 5}"> -->
+      <!-- OPPURE -->
+      <!-- <ion-label class="color" [class.questo-film-fa-cagare]="(item.rating! | toInt : 1) <= 5"> -->
+        {{ item.name }}
+        {{ item.year }}
+        {{ item.rating ? "rating: (" + (item.rating | toInt : 1) + ")" : "" }}
+      </ion-label>
+      <ion-label>
+        <ng-container *ngFor="let actor of item.cast">
+          {{actor.celebrityName}},
+        </ng-container>
+      </ion-label>
     </ion-item>
-    
+
+    <app-bar-custom *ngIf="item.rating" [rating]="item.rating"></app-bar-custom>
+
     <ion-item-options>
       <ion-item-option (click)="editClick(item.id)">Edit</ion-item-option>
-      <ion-item-option color="danger" (click)="deleteClick(item.id)">Delete</ion-item-option>
+      <ion-item-option color="danger" (click)="deleteClick(item.id)"
+        >Delete</ion-item-option
+      >
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
-
-<!-- <ion-list>
-  <ion-item-sliding *ngFor="let item of moviesInput">
-    <ion-item (click)="selectClick(item.id)">
-      <ion-label>{{item.title}}</ion-label>
-    </ion-item>
-    
-    <ion-item-options>
-      <ion-item-option (click)="editClick(item.id)">Edit</ion-item-option>
-      <ion-item-option color="danger" (click)="deleteClick(item.id)">Delete</ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-</ion-list>
-
-<ion-list>
-  <ion-item-sliding *ngFor="let item of celebritiesInput">
-    <ion-item (click)="selectClick(item.id)">
-      <ion-label>{{item.name}}</ion-label>
-    </ion-item>
-    
-    <ion-item-options>
-      <ion-item-option (click)="editClick(item.id)">Edit</ion-item-option>
-      <ion-item-option color="danger" (click)="deleteClick(item.id)">Delete</ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-</ion-list> -->

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Movie, MovieForm } from "../interfaces/movies.interface";
+import { Movie, MovieForm, ResponseDto } from "../interfaces/movies.interface";
 import { Observable, Subject, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -28,9 +28,20 @@ export class MoviesService {
     
     getObservable(): Observable <Movie[]> {
         // l'any, tipo di result, deve diventare poi un'interfaccia (gestendo anche la pagination praticamente)!
-        return this._http.get<Movie[]>(`${ this._baseUrl }/movies?order_by=id&page=0&size=25`).pipe(map((result: any) => {
-            return result.movies;
-        }));
+        // FATTO
+        return this._http.get<ResponseDto>(`${ this._baseUrl }/movies?order_by=id&page=0&size=25`).pipe(map(({movies}) => movies));
+    }
+
+    getObsMoviesByTitle(title: string | null): Observable <Movie[]> {
+        return this._http
+        .get<ResponseDto>(
+          `${this._baseUrl}/movies${title ? '?title=' + title.toLowerCase( ) : ''}`
+        )
+        .pipe(
+          map((response: ResponseDto) => {
+            return response.movies;
+          })
+        );
     }
     
     

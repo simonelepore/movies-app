@@ -1,35 +1,38 @@
 <ion-header [translucent]="true">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/movies"></ion-back-button>
-        </ion-buttons>
-        <ion-title>
-            Detail
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/movies"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Detail </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Movies</ion-title>
-        </ion-toolbar>
-    </ion-header> 
-    
-    <ion-card *ngIf="movie">
-        <ion-card-header>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-            <ion-card-subtitle>{{movie.genres}}</ion-card-subtitle>
-        </ion-card-header>
-        
-        <ion-card-content>
-            Release year: {{movie.year}}
-        </ion-card-content>
-        <ion-card-content>
-            Runtime: {{movie.runningTime}} minutes
-        </ion-card-content>
-        <ion-card-content>
-            Rating: {{movie.rating.averageRating}} ({{movie.rating.numVotes}} total votes)
-        </ion-card-content>
-    </ion-card>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Movies</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card *ngIf="movie">
+    <ion-card-header>
+      <ion-card-title>{{movie.title}}</ion-card-title>
+      <ion-card-subtitle>{{movie.genres}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content> Release year: {{movie.year}} </ion-card-content>
+    <ion-card-content>
+      Runtime: {{movie.runningTime}} minutes
+    </ion-card-content>
+    <ion-card-content>
+      Rating: {{movie.rating.averageRating}} ({{movie.rating.numVotes}} total
+      votes)
+    </ion-card-content>
+
+    <ion-card-content>
+      <ng-container *ngFor="let celebrity of movie.cast">
+        <a [routerLink]="['/tabs/celebrities/detail', celebrity.celebrityId]">{{celebrity.celebrityName}},</a>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

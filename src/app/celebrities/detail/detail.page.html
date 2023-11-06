@@ -1,28 +1,30 @@
 <ion-header [translucent]="true">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/celebrities"></ion-back-button>
-        </ion-buttons>
-        <ion-title>
-            Detail
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/celebrities"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Detail </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Celebrities</ion-title>
-        </ion-toolbar>
-    </ion-header> 
-    
-    <ion-card *ngIf="celebrity">
-        <ion-card-header>
-            <ion-card-title>{{celebrity.name}}</ion-card-title>
-        </ion-card-header>
-        
-        <ion-card-content>
-            Birth year: {{celebrity.birthYear}}
-        </ion-card-content>
-    </ion-card>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Celebrities</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card *ngIf="celebrity">
+    <ion-card-header>
+      <ion-card-title>{{celebrity.name}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content> Birth year: {{celebrity.birthYear}} </ion-card-content>
+
+    <ion-card-content>
+      <ng-container *ngFor="let movie of celebrity.movies">
+        <a [routerLink]="['/tabs/movies/detail', movie.movieId]">{{movie.movieTitle}},</a>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

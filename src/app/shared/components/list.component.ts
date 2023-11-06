@@ -15,10 +15,10 @@ import { Item } from '../interfaces/itemlist.interface';
 export class ListComponent implements OnInit {
 
   @Input() items:Item[] = [];
-
+  
   // @Input() moviesInput:Movie[]= [];
 
-  @Input() celebritiesInput:Celebrity[]= [];
+  // @Input() celebritiesInput:Celebrity[]= [];
 
   @Output() selectIdClicked = new EventEmitter<string>();
 

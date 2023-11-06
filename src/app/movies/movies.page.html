@@ -16,6 +16,59 @@
     </ion-toolbar>
   </ion-header>
   
-  <app-list [items]="movies" (selectIdClicked)="showMovieDetail($event)" (editIdClicked)="editMovie($event)" (deleteIdClicked)="deleteMovie($event)"></app-list>
+  <ion-range
+    aria-label="Range with ticks"
+    [ticks]="true"
+    [snaps]="true"
+    [min]="0"
+    [max]="10"
+    (ionChange)="onIonChange($event)"
+  ></ion-range>
+
+  <ion-searchbar
+    show-clear-button="always"
+    placeholder="Search by Title"
+    [formControl]="title"
+    type="text"
+  ></ion-searchbar>
+  
+  <app-list [items]="movies" (selectIdClicked)="loadMovie($event)" (editIdClicked)="editMovie($event)" (deleteIdClicked)="deleteMovie($event)"></app-list>
   
 </ion-content>
+
+<ion-footer *ngIf="selectedMovie">
+  <ion-toolbar class="footer-toolbar">
+    <ion-title>Details</ion-title>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          {{selectedMovie.name}} - {{selectedMovie.year}}</ion-card-title
+        >
+        <ion-card-subtitle>
+          <ion-row class="cast" *ngIf="selectedMovie.cast">
+            <ion-col size="2">Actors: </ion-col
+            ><ion-col size="10">
+              <ng-container *ngFor="let person of selectedMovie.cast">
+                {{ person.category === "actor" ? person.celebrityName + ", " :
+                "" }}
+              </ng-container>
+            </ion-col>
+          </ion-row>
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content
+        ><app-bar-custom
+          *ngIf="selectedMovie.rating"
+          [rating]="selectedMovie.rating"
+        ></app-bar-custom>
+        <ion-row>
+          <ion-col offset="3">
+            <ion-button (click)="showMovieDetail(selectedMovie.id)">
+              Go to details
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-toolbar>
+</ion-footer>
