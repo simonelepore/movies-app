@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { MoviesService } from '../services/movies.service';
 import { Movie } from '../interfaces/movies.interface';
+import { TitleValidator } from './validators/title.validator';
 
 @Component({
   selector: 'app-create',
@@ -29,7 +30,11 @@ export class CreatePage {
       this.createForm = new FormGroup({
         // id: new FormControl((this._moviesService.getArrayLength() + 1).toString()),
         id: new FormControl("", Validators.required),
-        title: new FormControl("", Validators.required),
+        title: new FormControl("", {
+          validators: Validators.required,
+          asyncValidators: TitleValidator.createValidator(this._moviesService),
+          updateOn: "blur"
+        }),
         year: new FormControl("", Validators.required),
         runningTime: new FormControl("", Validators.required),
         genres: new FormControl("", Validators.required),
