@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Movie, MovieForm, ResponseDto } from "../interfaces/movies.interface";
-import { Observable, Subject, map } from "rxjs";
+import { Observable, Subject, map, of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 
@@ -40,6 +40,18 @@ export class MoviesService {
         .pipe(
           map((response: ResponseDto) => {
             return response.movies;
+          })
+        );
+    }
+
+    checkTitleExists(title: string | null): Observable <boolean> {
+        return this._http
+        .get<ResponseDto>(
+          `${this._baseUrl}/movies${title ? '?title=' + title.toLowerCase( ) : ''}`
+        )
+        .pipe(
+          map((response: ResponseDto) => {
+            return response.movies.length == 0;
           })
         );
     }

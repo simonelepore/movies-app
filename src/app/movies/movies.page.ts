@@ -35,6 +35,8 @@ export class MoviesPage {
     // this.provaS$.subscribe((value) => console.log("questa è una prova " + value));
     // this.provaS$.next(5)
 
+    console.log(this._moviesService.checkTitleExists("ciao"));
+
 
     this.title.valueChanges
     .pipe(

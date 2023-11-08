@@ -19,6 +19,9 @@
 - fai delete e aggiunta
 
 
+creazione di un validatore asincrono in creazione di un movie sul campo nome (singolo). al blur, quindi quando l'utente esce dal campo
+verifica che quel titolo non esista già. che non sia stato già assegnato a nessun altro film. e che appaia un errore che dice che quel titolo già appaia. 
+
 
 
 -header come componente
